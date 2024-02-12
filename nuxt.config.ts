@@ -10,4 +10,7 @@ export default defineNuxtConfig({
   colorMode: {
     preference: "light",
   },
+  app: {
+    pageTransition: { name: "page", mode: "out-in" },
+  },
 });

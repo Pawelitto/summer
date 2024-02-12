@@ -15,9 +15,9 @@ const isDark = computed({
   },
 });
 
-const changeSite = (to) => {
+const changeSite = async (to) => {
   isOpen.value = false;
-  navigateTo(to);
+  await navigateTo(to);
 };
 
 const links = [
@@ -227,27 +227,5 @@ onMounted(() => {
     </USlideover>
 
     <slot />
-
-    <Footer />
   </div>
 </template>
-<style scoped>
-.view-leave-active {
-  transition: opacity 0.5s ease-in-out, transform 0.5s ease;
-}
-
-.view-enter-active {
-  transition: opacity 0.5s ease-in-out, transform 0.5s ease;
-  transition-delay: 0.5s;
-}
-
-.view-enter,
-.view-leave-to {
-  opacity: 0;
-}
-
-.view-enter-to,
-.view-leave {
-  opacity: 1;
-}
-</style>
