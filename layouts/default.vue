@@ -1,10 +1,11 @@
 <script setup>
 import { initFlowbite } from "flowbite";
 // https://open-meteo.com/en/docs/
-// https://uiverse.io/vinodjangid07/grumpy-mule-23
+
 const isOpen = ref(false);
 
 const colorMode = useColorMode();
+
 const isDark = computed({
   get() {
     return colorMode.value === "dark";
@@ -14,48 +15,46 @@ const isDark = computed({
   },
 });
 
+const changeSite = (to) => {
+  isOpen.value = false;
+  navigateTo(to);
+};
+
 const links = [
   {
     label: "Strona główna",
     icon: "i-heroicons-home",
     to: "/",
-    click: () => (isOpen.value = false),
   },
   {
     label: "Okolica",
-    icon: "i-heroicons-chart-bar",
+    icon: "i-heroicons-map-pin",
     to: "/okolica",
-    click: () => (isOpen.value = false),
   },
   {
     label: "Galeria",
-    icon: "i-heroicons-command-line",
+    icon: "i-heroicons-photo",
     to: "/galeria",
-    click: () => (isOpen.value = false),
   },
   {
     label: "Apartamenty",
-    icon: "i-heroicons-command-line",
+    icon: "i-heroicons-home-modern",
     to: "/apartamenty",
-    click: () => (isOpen.value = false),
   },
   {
     label: "Oferta",
-    icon: "i-heroicons-command-line",
+    icon: "i-heroicons-document-text",
     to: "/oferta",
-    click: () => (isOpen.value = false),
   },
   {
     label: "Wskazówki",
-    icon: "i-heroicons-command-line",
+    icon: "i-heroicons-light-bulb",
     to: "/wskazowki",
-    click: () => (isOpen.value = false),
   },
   {
     label: "Kontakt",
-    icon: "i-heroicons-command-line",
+    icon: "i-heroicons-phone",
     to: "/kontakt",
-    click: () => (isOpen.value = false),
   },
 ];
 
@@ -74,8 +73,8 @@ onMounted(() => {
       >
         <span
           class="flex items-center self-center text-2xl font-semibold whitespace-nowrap dark:text-white"
-          ><nuxt-img src="/images/logo.png" class="h-8 pr-2" /> Villa</span
-        >
+          ><nuxt-img src="/images/logo.png" class="h-8 pr-2" />
+        </span>
 
         <UButton @click="isOpen = true" class="md:hidden">
           <span class="sr-only">Open main menu</span>
@@ -151,6 +150,22 @@ onMounted(() => {
           >
         </li>
       </ul>
+
+      <ClientOnly>
+        <UButton
+          :icon="
+            isDark ? 'i-heroicons-moon-20-solid' : 'i-heroicons-sun-20-solid'
+          "
+          color="gray"
+          class="hidden md:flex items-center"
+          variant="ghost"
+          aria-label="Theme"
+          @click="isDark = !isDark"
+        />
+        <template #fallback>
+          <div class="hidden md:block w-8 h-8" />
+        </template>
+      </ClientOnly>
     </nav>
 
     <USlideover v-model="isOpen">
@@ -194,10 +209,45 @@ onMounted(() => {
           </div>
         </template>
 
-        <UVerticalNavigation :links="links" />
+        <div class="flex flex-col w-full">
+          <UButton
+            v-for="item in links"
+            :key="item"
+            :icon="item.icon"
+            size="sm"
+            color="primary"
+            variant="outline"
+            :label="item.label"
+            :trailing="false"
+            class="my-0.5"
+            @click="changeSite(item.to)"
+          />
+        </div>
       </UCard>
     </USlideover>
 
     <slot />
+
+    <Footer />
   </div>
 </template>
+<style scoped>
+.view-leave-active {
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease;
+}
+
+.view-enter-active {
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease;
+  transition-delay: 0.5s;
+}
+
+.view-enter,
+.view-leave-to {
+  opacity: 0;
+}
+
+.view-enter-to,
+.view-leave {
+  opacity: 1;
+}
+</style>
