@@ -1,13 +1,42 @@
+<script setup>
+const activePhoto = ref(0);
+
+const images = ref([
+  "https://bitly.ws/3d25w",
+  "https://bitly.ws/3d25t",
+  "https://bitly.ws/3d26c",
+]);
+
+let interval;
+
+const changePhotoInterval = () => {
+  activePhoto.value = (activePhoto.value + 1) % images.value.length;
+};
+
+const changeActivePhoto = (id) => {
+  activePhoto.value = id;
+  clearInterval(interval);
+  interval = setInterval(changePhotoInterval, 5500);
+};
+
+onMounted(() => {
+  interval = setInterval(changePhotoInterval, 5500);
+});
+
+onBeforeUnmount(() => {
+  clearInterval(interval);
+});
+</script>
 <template>
   <div>
     <section>
       <div
         class="gap-8 items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 xl:gap-16 sm:py-16 lg:px-6"
       >
-        <img
-          class="mb-4 w-full lg:mb-0 rounded-lg"
-          src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/features/feature-office-long.png"
+        <NuxtImg
           alt="feature image"
+          :src="images[activePhoto]"
+          class="mb-4 w-full lg:mb-0 rounded-lg lg:h-5/6 object-cover"
         />
         <div class="text-gray-500 dark:text-gray-400 sm:text-lg">
           <h2
@@ -51,8 +80,8 @@
                   private GitHub repos only accessible to you and people you
                   share them with.
                 </p>
-                <a
-                  href="#"
+                <button
+                  @click="changeActivePhoto(0)"
                   class="inline-flex items-center text-primary-600 hover:text-primary-800 dark:text-primary-500 dark:hover:text-primary-600"
                 >
                   Learn more
@@ -68,7 +97,7 @@
                       clip-rule="evenodd"
                     ></path>
                   </svg>
-                </a>
+                </button>
               </div>
             </div>
             <div class="flex pt-8">
@@ -98,8 +127,8 @@
                   See the packages your project depends on, the repositories
                   that depend on them, and any vulnerabilities detected.
                 </p>
-                <a
-                  href="#"
+                <button
+                  @click="changeActivePhoto(1)"
                   class="inline-flex items-center text-purple-600 hover:text-purple-800 dark:text-purple-500 dark:hover:text-purple-600"
                 >
                   Learn more
@@ -115,7 +144,7 @@
                       clip-rule="evenodd"
                     ></path>
                   </svg>
-                </a>
+                </button>
               </div>
             </div>
             <div class="flex pt-8">
@@ -146,8 +175,8 @@
                   Prevent new vulnerabilities from being introduced by scanning
                   every pull request.
                 </p>
-                <a
-                  href="#"
+                <button
+                  @click="changeActivePhoto(2)"
                   class="inline-flex items-center text-teal-600 hover:text-teal-800 dark:text-teal-500 dark:hover:text-teal-600"
                 >
                   Learn more
@@ -163,7 +192,7 @@
                       clip-rule="evenodd"
                     ></path>
                   </svg>
-                </a>
+                </button>
               </div>
             </div>
           </div>
