@@ -1,6 +1,11 @@
 <script setup>
 import { onMounted } from "vue";
 
+const weather = ref(null);
+
+const { data } = await useFetch("/api/weather");
+weather.value = data.value;
+
 const items = [
   "https://picsum.photos/1920/1080?random=1",
   "https://picsum.photos/1920/1080?random=2",
@@ -23,26 +28,9 @@ const scroll = (direction) => {
   }
 };
 
-const weather = ref(null);
 // https://weatherwidget.io/
 
-const fetchData = async () => {
-  const { data } = await useFetch(
-    "https://forecast7.com/pl/43d8215d67/pirovac/?format=json",
-    {
-      method: "GET",
-      headers: {
-        Accept: "application/json, text/plain, */*",
-      },
-    }
-  );
-
-  weather.value = data.value;
-};
-
-onMounted(async () => {
-  await fetchData();
-});
+onMounted(async () => {});
 </script>
 <template>
   <div>

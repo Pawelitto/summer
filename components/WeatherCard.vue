@@ -6,10 +6,7 @@ const props = defineProps({
 });
 
 const temp = computed(() => {
-  return (
-    (props.data.minTemp + props.data.maxTemp) /
-    divideNumbs[Math.floor(Math.random() * divideNumbs.length)]
-  ).toFixed(1);
+  return (props.data.minTemp + props.data.maxTemp) / 2;
 });
 
 const iconName = computed(() => {

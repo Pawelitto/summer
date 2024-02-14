@@ -67,8 +67,7 @@ onMounted(() => {
     <nav
       class="w-full flex flex-wrap items-center justify-between mx-auto p-4 bg-gray-100 border-gray-200 dark:bg-gray-900"
     >
-      <NuxtLink
-        to="/"
+      <span
         class="w-full flex items-center justify-between md:justify-center mx-auto my-2"
       >
         <span
@@ -94,7 +93,7 @@ onMounted(() => {
             />
           </svg>
         </UButton>
-      </NuxtLink>
+      </span>
 
       <ul
         class="hidden md:flex flex-row items-center justify-center m-auto font-medium my-2 border border-gray-100 rounded-lg space-x-8 md:border-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700"
