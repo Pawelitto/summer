@@ -1,4 +1,6 @@
 <script setup>
+import { onMounted } from "vue";
+
 const items = [
   "https://picsum.photos/1920/1080?random=1",
   "https://picsum.photos/1920/1080?random=2",
@@ -22,16 +24,25 @@ const scroll = (direction) => {
 };
 
 const weather = ref(null);
+// https://weatherwidget.io/
 
-const { data } = await useFetch(
-  "https://forecast7.com/pl/43d8215d67/pirovac/?format=json",
-  {
-    headers: {
-      accept: ["application/json", "text/plain"],
-    },
-  }
-);
-weather.value = data.value;
+const fetchData = async () => {
+  const { data } = await useFetch(
+    "https://forecast7.com/pl/43d8215d67/pirovac/?format=json",
+    {
+      method: "GET",
+      headers: {
+        Accept: "application/json, text/plain, */*",
+      },
+    }
+  );
+
+  weather.value = data.value;
+};
+
+onMounted(async () => {
+  await fetchData();
+});
 </script>
 <template>
   <div>
@@ -100,7 +111,7 @@ weather.value = data.value;
             d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5"
           />
         </svg>
-        <span class="mt-4 font-bold"> {{ weather.timezone }}</span>
+        <span class="mt-4 font-bold"> {{ weather?.timezone }}</span>
       </div>
 
       <div
@@ -108,7 +119,7 @@ weather.value = data.value;
         class="flex flex-row items-center justify-between overflow-x-scroll w-full m-4"
       >
         <WeatherCard
-          v-for="item in weather.forecast"
+          v-for="item in weather?.forecast"
           :key="item"
           :data="item"
         />
