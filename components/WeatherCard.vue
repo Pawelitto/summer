@@ -19,6 +19,8 @@ const iconName = computed(() => {
     return "i-wi-day-cloudy";
   } else if (icon == "cloudy") {
     return "i-wi-cloudy";
+  } else if (icon == "clear-day") {
+    return "i-wi-day-sunny";
   }
 });
 </script>

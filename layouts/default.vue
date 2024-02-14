@@ -1,8 +1,17 @@
 <script setup>
 import { initFlowbite } from "flowbite";
+import { watch } from "vue";
 // https://open-meteo.com/en/docs/
 
 const isOpen = ref(false);
+const route = useRoute();
+
+const activeLink = ref(`${route.path}`);
+
+watch(
+  () => route.path,
+  () => (activeLink.value = route.path)
+);
 
 const colorMode = useColorMode();
 
@@ -101,7 +110,7 @@ onMounted(() => {
         <li>
           <NuxtLink
             to="/"
-            class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500"
+            :class="activeLink == '/' ? 'activeLink' : 'link'"
             aria-current="page"
             >Strona główna</NuxtLink
           >
@@ -109,42 +118,42 @@ onMounted(() => {
         <li>
           <NuxtLink
             to="/okolica"
-            class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+            :class="activeLink == '/okolica' ? 'activeLink' : 'link'"
             >Okolica</NuxtLink
           >
         </li>
         <li>
           <NuxtLink
             to="/galeria"
-            class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+            :class="activeLink == '/galeria' ? 'activeLink' : 'link'"
             >Galeria</NuxtLink
           >
         </li>
         <li>
           <NuxtLink
             to="/apartamenty"
-            class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+            :class="activeLink == '/apartamenty' ? 'activeLink' : 'link'"
             >Apartamenty</NuxtLink
           >
         </li>
         <li>
           <NuxtLink
             to="/oferta"
-            class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+            :class="activeLink == '/oferta' ? 'activeLink' : 'link'"
             >Oferta</NuxtLink
           >
         </li>
         <li>
           <NuxtLink
             to="/wskazowki"
-            class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+            :class="activeLink == '/wskazowki' ? 'activeLink' : 'link'"
             >Wskazówki</NuxtLink
           >
         </li>
         <li>
           <NuxtLink
             to="/kontakt"
-            class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+            :class="activeLink == '/kontakt' ? 'activeLink' : 'link'"
             >Kontakt</NuxtLink
           >
         </li>
@@ -228,3 +237,12 @@ onMounted(() => {
     <slot />
   </div>
 </template>
+<style scoped>
+.activeLink {
+  @apply block text-blue-500 transition-all;
+}
+
+.link {
+  @apply block text-gray-900 dark:text-white hover:text-blue-500 dark:hover:text-blue-500 transition-all;
+}
+</style>
