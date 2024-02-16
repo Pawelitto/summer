@@ -1,8 +1,10 @@
 <script setup>
 import { initFlowbite } from "flowbite";
 import { watch } from "vue";
+
 // https://open-meteo.com/en/docs/
 
+const { locale } = useI18n();
 const isOpen = ref(false);
 const route = useRoute();
 
@@ -81,7 +83,13 @@ onMounted(() => {
       >
         <span
           class="flex items-center self-center text-2xl font-semibold whitespace-nowrap dark:text-white"
-          ><nuxt-img src="/images/logo.png" class="h-8 pr-2" />
+        >
+          <!-- {{ $t("welcome") }}
+          <select v-model="locale">
+            <option value="en">en</option>
+            <option value="pl">pls</option>
+          </select> -->
+          <nuxt-img src="/images/logo.png" class="h-8 pr-2" />
         </span>
 
         <UButton @click="isOpen = true" class="md:hidden">
