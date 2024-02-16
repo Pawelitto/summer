@@ -89,7 +89,7 @@ onMounted(() => {
             <option value="en">en</option>
             <option value="pl">pls</option>
           </select> -->
-          <nuxt-img src="/images/logo.png" class="h-8 pr-2" />
+          <NuxtImg src="/images/logo.png" class="h-8 pr-2" />
         </span>
 
         <UButton @click="isOpen = true" class="md:hidden">
